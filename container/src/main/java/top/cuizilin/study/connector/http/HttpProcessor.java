@@ -1,7 +1,5 @@
 package top.cuizilin.study.connector.http;
 
-import top.cuizilin.study.ServletProcessor;
-import top.cuizilin.study.StaticResourceProcessor;
 import top.cuizilin.study.util.RequestUtil;
 
 import javax.servlet.ServletException;
@@ -119,15 +117,7 @@ public class HttpProcessor implements Runnable{
             parseHeaders(input);
 
 
-            // check if this is a request for a servlet or a static resource
-            // a request for a servlet begins with "/servlet/"
-            if (request.getRequestURI().startsWith("/servlet/")) {
-                ServletProcessor processor = new ServletProcessor();
-                processor.process(request, response);
-            } else {
-                StaticResourceProcessor processor = new StaticResourceProcessor();
-                processor.process(request, response);
-            }
+            connector.getContainer().invoke(request, response);
 
             // Close the socket
             socket.close();

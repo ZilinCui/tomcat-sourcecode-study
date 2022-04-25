@@ -1,5 +1,7 @@
 package top.cuizilin.study.connector.http;
 
+import org.apache.catalina.Container;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -11,9 +13,24 @@ public class HttpConnector implements Runnable{
 
     int currentProcessors;
 
+    private Container container;
+
+    public void setContainer(Container container){
+        this.container = container;
+    }
+
+    public Container getContainer(){
+       return this.container;
+    }
+
     private boolean stopped;
 
     Stack<HttpProcessor> processors = new Stack<>();
+
+
+    public void start(){
+        new Thread(this).start();
+    }
 
     @Override
     public void run() {

@@ -1,17 +1,22 @@
 package top.cuizilin.study.connector.http;
 
+import org.apache.catalina.Connector;
+import org.apache.catalina.Context;
+import org.apache.catalina.Request;
+import org.apache.catalina.Response;
 import top.cuizilin.study.connector.ResponseStream;
 import top.cuizilin.study.connector.ResponseWriter;
 import top.cuizilin.study.util.CookieTools;
 
 import javax.servlet.ServletOutputStream;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-public class HttpResponse implements HttpServletResponse {
+public class HttpResponse implements HttpServletResponse , Response {
 
     // the default buffer size
     private static final int BUFFER_SIZE = 1024;
@@ -90,6 +95,16 @@ public class HttpResponse implements HttpServletResponse {
 
     public String getContentType() {
         return contentType;
+    }
+
+    @Override
+    public PrintWriter getReporter() {
+        return null;
+    }
+
+    @Override
+    public void recycle() {
+
     }
 
 
@@ -195,9 +210,105 @@ public class HttpResponse implements HttpServletResponse {
         }
     }
 
+    @Override
+    public Connector getConnector() {
+        return null;
+    }
+
+    @Override
+    public void setConnector(Connector connector) {
+
+    }
+
+    @Override
+    public int getContentCount() {
+        return 0;
+    }
+
+    @Override
+    public Context getContext() {
+        return null;
+    }
+
+    @Override
+    public void setContext(Context context) {
+
+    }
+
+    @Override
+    public void setAppCommitted(boolean appCommitted) {
+
+    }
+
+    @Override
+    public boolean isAppCommitted() {
+        return false;
+    }
+
+    @Override
+    public boolean getIncluded() {
+        return false;
+    }
+
+    @Override
+    public void setIncluded(boolean included) {
+
+    }
+
+    @Override
+    public String getInfo() {
+        return null;
+    }
+
+    @Override
+    public Request getRequest() {
+        return null;
+    }
+
+    @Override
+    public void setRequest(Request request) {
+
+    }
+
+    @Override
+    public ServletResponse getResponse() {
+        return null;
+    }
+
     public OutputStream getStream() {
         return this.output;
     }
+
+    @Override
+    public void setStream(OutputStream stream) {
+
+    }
+
+    @Override
+    public void setSuspended(boolean suspended) {
+
+    }
+
+    @Override
+    public boolean isSuspended() {
+        return false;
+    }
+
+    @Override
+    public void setError() {
+
+    }
+
+    @Override
+    public boolean isError() {
+        return false;
+    }
+
+    @Override
+    public ServletOutputStream createOutputStream() throws IOException {
+        return null;
+    }
+
     /**
      * Send the HTTP response headers, if this has not already occurred.
      */
@@ -476,6 +587,11 @@ public class HttpResponse implements HttpServletResponse {
     }
 
     public void resetBuffer() {
+    }
+
+    @Override
+    public void sendAcknowledgement() throws IOException {
+
     }
 
     public void sendError(int sc) throws IOException {

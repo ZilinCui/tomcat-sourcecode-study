@@ -6,6 +6,7 @@ package top.cuizilin.study.connector.http;
  *  The HttpRequestImpl class employs a pool of HttpHeader objects for performance
  *  These two classes will be explained in Chapter 4.
  */
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Cookie;
@@ -21,18 +22,14 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
+import org.apache.catalina.*;
 import top.cuizilin.study.connector.RequestStream;
 import top.cuizilin.study.util.Enumerator;
 import top.cuizilin.study.util.RequestUtil;
 
-public class HttpRequest implements HttpServletRequest {
+public class HttpRequest implements HttpServletRequest, Request {
 
     private String contentType;
     private int contentLength;
@@ -219,15 +216,61 @@ public class HttpRequest implements HttpServletRequest {
         return (new RequestStream(this));
     }
 
+    @Override
+    public void finishRequest() throws IOException {
+
+    }
+
+    @Override
+    public Object getNote(String name) {
+        return null;
+    }
+
+    @Override
+    public Iterator getNoteNames() {
+        return null;
+    }
+
+    @Override
+    public void recycle() {
+
+    }
+
+    @Override
+    public void removeNote(String name) {
+
+    }
+
     public InputStream getStream() {
         return input;
     }
+
+    @Override
+    public void setStream(InputStream stream) {
+
+    }
+
+    @Override
+    public Wrapper getWrapper() {
+        return null;
+    }
+
+    @Override
+    public void setWrapper(Wrapper wrapper) {
+
+    }
+
     public void setContentLength(int length) {
         this.contentLength = length;
     }
 
     public void setContentType(String type) {
         this.contentType = type;
+    }
+
+    @Override
+    public void setNote(String name, Object value) {
+
     }
 
     public void setInet(InetAddress inetAddress) {
@@ -251,6 +294,21 @@ public class HttpRequest implements HttpServletRequest {
 
     public void setProtocol(String protocol) {
         this.protocol = protocol;
+    }
+
+    @Override
+    public void setRemoteAddr(String remote) {
+
+    }
+
+    @Override
+    public void setScheme(String scheme) {
+
+    }
+
+    @Override
+    public void setSecure(boolean secure) {
+
     }
 
     public void setQueryString(String queryString) {
@@ -569,6 +627,11 @@ public class HttpRequest implements HttpServletRequest {
     public void setAttribute(String key, Object value) {
     }
 
+    @Override
+    public String getAuthorization() {
+        return null;
+    }
+
     /**
      * Set the authorization credentials sent with this request.
      *
@@ -576,6 +639,51 @@ public class HttpRequest implements HttpServletRequest {
      */
     public void setAuthorization(String authorization) {
         this.authorization = authorization;
+    }
+
+    @Override
+    public Connector getConnector() {
+        return null;
+    }
+
+    @Override
+    public void setConnector(Connector connector) {
+
+    }
+
+    @Override
+    public Context getContext() {
+        return null;
+    }
+
+    @Override
+    public void setContext(Context context) {
+
+    }
+
+    @Override
+    public String getInfo() {
+        return null;
+    }
+
+    @Override
+    public ServletRequest getRequest() {
+        return null;
+    }
+
+    @Override
+    public Response getResponse() {
+        return null;
+    }
+
+    @Override
+    public void setResponse(Response response) {
+
+    }
+
+    @Override
+    public Socket getSocket() {
+        return null;
     }
 
     public void setCharacterEncoding(String encoding) throws UnsupportedEncodingException {
