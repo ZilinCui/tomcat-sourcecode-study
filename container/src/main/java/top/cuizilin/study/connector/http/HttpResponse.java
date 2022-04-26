@@ -25,6 +25,8 @@ public class HttpResponse implements HttpServletResponse , Response {
     PrintWriter writer;
     protected byte[] buffer = new byte[BUFFER_SIZE];
     protected int bufferCount = 0;
+
+    private HttpServletResponse response = new HttpResponseFacade(this);
     /**
      * Has this response been committed yet?
      */
@@ -272,7 +274,7 @@ public class HttpResponse implements HttpServletResponse , Response {
 
     @Override
     public ServletResponse getResponse() {
-        return null;
+        return response;
     }
 
     public OutputStream getStream() {

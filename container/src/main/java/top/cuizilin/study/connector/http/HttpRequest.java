@@ -46,6 +46,8 @@ public class HttpRequest implements HttpServletRequest, Request {
     private String requestedSessionId;
     private boolean requestedSessionURL;
 
+    private HttpServletRequest request = new HttpRequestFacade(this);
+
     /**
      * The request attributes for this request.
      */
@@ -668,7 +670,7 @@ public class HttpRequest implements HttpServletRequest, Request {
 
     @Override
     public ServletRequest getRequest() {
-        return null;
+        return request;
     }
 
     @Override
