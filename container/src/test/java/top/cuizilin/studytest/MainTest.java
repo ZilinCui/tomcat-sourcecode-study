@@ -1,5 +1,9 @@
 package top.cuizilin.studytest;
 
+import org.apache.catalina.Lifecycle;
+import org.apache.catalina.LifecycleException;
+import org.apache.catalina.LifecycleListener;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -8,27 +12,34 @@ import java.net.Socket;
 
 public class MainTest {
     public static void main(String[] args) {
-        byte[] b = new byte[4096*4096];
-        try {
-            FileInputStream fis = new FileInputStream(
-                    new File("C:\\Users\\Zilin Cui\\Desktop\\myblog.sql"));
-            System.out.println(fis.available());
 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    }
+}
+
+class MyLifecycle implements Lifecycle{
+
+    @Override
+    public void addLifecycleListener(LifecycleListener listener) {
+
     }
 
-    private Object socket = new Object();
-
-    public void setSocket(){
-        this.socket = new Object();
+    @Override
+    public LifecycleListener[] findLifecycleListeners() {
+        return new LifecycleListener[0];
     }
 
-    public Object getSocket(){
-       Object socket = this.socket;
-       return socket;
+    @Override
+    public void removeLifecycleListener(LifecycleListener listener) {
+
+    }
+
+    @Override
+    public void start() throws LifecycleException {
+
+    }
+
+    @Override
+    public void stop() throws LifecycleException {
+
     }
 }

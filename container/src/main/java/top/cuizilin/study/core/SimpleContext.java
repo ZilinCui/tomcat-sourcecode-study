@@ -3,6 +3,7 @@ package top.cuizilin.study.core;
 import org.apache.catalina.*;
 import org.apache.catalina.deploy.*;
 import org.apache.catalina.util.CharsetMapper;
+import org.apache.catalina.util.LifecycleSupport;
 
 import javax.naming.directory.DirContext;
 import javax.servlet.ServletContext;
@@ -11,7 +12,7 @@ import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.util.HashMap;
 
-public class SimpleContext implements Context, Pipeline {
+public class SimpleContext implements Context, Pipeline, Lifecycle {
 
     protected HashMap children = new HashMap();
     protected Loader loader;
@@ -21,6 +22,15 @@ public class SimpleContext implements Context, Pipeline {
     protected HashMap mappers = new HashMap();
     protected Container parent;
 
+    protected boolean started;
+
+    protected LifecycleSupport lifecycle = new LifecycleSupport(this);
+
+    public SimpleContext(){
+        setBasic(new SimpleContextValve());
+    }
+
+
     @Override
     public String getInfo() {
         return null;
@@ -28,10 +38,10 @@ public class SimpleContext implements Context, Pipeline {
 
     @Override
     public Loader getLoader() {
-        if(loader!=null){
+        if (loader != null) {
             return loader;
         }
-        if(parent != null){
+        if (parent != null) {
             return parent.getLoader();
         }
         return null;
@@ -124,7 +134,7 @@ public class SimpleContext implements Context, Pipeline {
 
     @Override
     public void addChild(Container child) {
-        child.setParent((Container)this);
+        child.setParent((Container) this);
         children.put(child.getName(), child);
     }
 
@@ -135,8 +145,8 @@ public class SimpleContext implements Context, Pipeline {
 
     @Override
     public void addMapper(Mapper mapper) {
-        mapper.setContainer((Container)this);
-        synchronized(mappers){
+        mapper.setContainer((Container) this);
+        synchronized (mappers) {
             if (mappers.get(mapper.getProtocol()) != null)
                 throw new IllegalArgumentException("addMapper:  Protocol '" +
                         mapper.getProtocol() + "' is not unique");
@@ -523,7 +533,7 @@ public class SimpleContext implements Context, Pipeline {
 
     @Override
     public void addServletMapping(String pattern, String name) {
-        synchronized (servletMappings){
+        synchronized (servletMappings) {
             servletMappings.put(pattern, name);
         }
     }
@@ -862,6 +872,76 @@ public class SimpleContext implements Context, Pipeline {
 
     @Override
     public void removeWrapperListener(String listener) {
+
+    }
+
+    @Override
+    public void addLifecycleListener(LifecycleListener listener) {
+        lifecycle.addLifecycleListener(listener);
+    }
+
+    @Override
+    public LifecycleListener[] findLifecycleListeners() {
+        return new LifecycleListener[0];
+    }
+
+    @Override
+    public void removeLifecycleListener(LifecycleListener listener) {
+
+    }
+
+    @Override
+    public synchronized void start() throws LifecycleException {
+        if (started) {
+            throw new LifecycleException("SimpleContext has already started");
+        }
+        lifecycle.fireLifecycleEvent(BEFORE_START_EVENT, null);
+        started = true;
+
+
+        //start the loader
+        if (loader != null && loader instanceof Lifecycle) {
+            ((Lifecycle) loader).start();
+        }
+
+        //start the children container
+        Container[] children = findChildren();
+        for (int i = 0; i < children.length; i++) {
+            if (children[i] instanceof Lifecycle) {
+                ((Lifecycle) children[i]).start();
+            }
+        }
+        if (pipeline instanceof Lifecycle) {
+            ((Lifecycle) pipeline).start();
+        }
+         lifecycle.fireLifecycleEvent(START_EVENT, null);
+
+        lifecycle.fireLifecycleEvent(AFTER_START_EVENT, null);
+    }
+
+    @Override
+    public void stop() throws LifecycleException {
+        if(!started){
+            throw new LifecycleException("SimpleContext has not been started");
+        }
+        lifecycle.fireLifecycleEvent(BEFORE_STOP_EVENT, null);
+        lifecycle.fireLifecycleEvent(STOP_EVENT, null);
+        started = false;
+
+        if(pipeline instanceof Lifecycle){
+            ((Lifecycle)pipeline).stop();
+        }
+        Container[] children = findChildren();
+        for (int i = 0; i < children.length; i++) {
+           if(children[i] instanceof Lifecycle){
+               ((Lifecycle)children[i]).stop();
+           }
+        }
+        if(loader != null && (loader instanceof Lifecycle)){
+            ((Lifecycle)loader).stop();
+        }
+
+        lifecycle.fireLifecycleEvent(AFTER_STOP_EVENT, null);
 
     }
 }

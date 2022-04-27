@@ -5,7 +5,7 @@ import org.apache.catalina.*;
 import javax.servlet.ServletException;
 import java.io.IOException;
 
-public class SimplePipeline implements Pipeline {
+public class SimplePipeline implements Pipeline, Lifecycle {
 
     protected Container container;
 
@@ -58,6 +58,31 @@ public class SimplePipeline implements Pipeline {
 
     @Override
     public void removeValve(Valve valve) {
+
+    }
+
+    @Override
+    public void addLifecycleListener(LifecycleListener listener) {
+
+    }
+
+    @Override
+    public LifecycleListener[] findLifecycleListeners() {
+        return new LifecycleListener[0];
+    }
+
+    @Override
+    public void removeLifecycleListener(LifecycleListener listener) {
+
+    }
+
+    @Override
+    public void start() throws LifecycleException {
+
+    }
+
+    @Override
+    public void stop() throws LifecycleException {
 
     }
 
