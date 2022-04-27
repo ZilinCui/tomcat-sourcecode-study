@@ -21,6 +21,7 @@ public class SimpleContext implements Context, Pipeline, Lifecycle {
     protected Mapper mapper;
     protected HashMap mappers = new HashMap();
     protected Container parent;
+    protected Logger logger;
 
     protected boolean started;
 
@@ -54,14 +55,19 @@ public class SimpleContext implements Context, Pipeline, Lifecycle {
 
     @Override
     public Logger getLogger() {
-        return null;
+        return this.logger;
     }
 
     @Override
     public void setLogger(Logger logger) {
-
+        this.logger = logger;
     }
 
+    private void log(String message) {
+        Logger logger = this.getLogger();
+        if (logger!=null)
+            logger.log(message);
+    }
     @Override
     public Manager getManager() {
         return null;
@@ -892,6 +898,7 @@ public class SimpleContext implements Context, Pipeline, Lifecycle {
 
     @Override
     public synchronized void start() throws LifecycleException {
+        log("start the SimpleContext");
         if (started) {
             throw new LifecycleException("SimpleContext has already started");
         }
@@ -917,10 +924,12 @@ public class SimpleContext implements Context, Pipeline, Lifecycle {
          lifecycle.fireLifecycleEvent(START_EVENT, null);
 
         lifecycle.fireLifecycleEvent(AFTER_START_EVENT, null);
+        log("started");
     }
 
     @Override
     public void stop() throws LifecycleException {
+        log("stopped the SimpleContext");
         if(!started){
             throw new LifecycleException("SimpleContext has not been started");
         }
@@ -943,5 +952,6 @@ public class SimpleContext implements Context, Pipeline, Lifecycle {
 
         lifecycle.fireLifecycleEvent(AFTER_STOP_EVENT, null);
 
+        log("stopped");
     }
 }

@@ -4,6 +4,7 @@ package top.cuizilin.study.startup;
 import org.apache.catalina.*;
 import top.cuizilin.study.connector.http.HttpConnector;
 import top.cuizilin.study.core.*;
+import top.cuizilin.study.logger.FileLogger;
 
 public final class BootStrap {
     public static void main(String[] args) {
@@ -33,6 +34,15 @@ public final class BootStrap {
         // context.addServletMapping(pattern, name);
         context.addServletMapping("/Primitive", "Primitive");
         context.addServletMapping("/Modern", "Modern");
+
+        // ------ add logger --------
+        System.setProperty("catalina.base", System.getProperty("user.dir"));
+        FileLogger logger = new FileLogger();
+        logger.setPrefix("FileLog_");
+        logger.setSuffix(".txt");
+        logger.setTimestamp(true);
+        logger.setDirectory("D:\\SOFT\\program\\sourceCodeStudy\\study\\container\\webroot");
+        context.setLogger(logger);
 
         HttpConnector connector = new HttpConnector();
 
