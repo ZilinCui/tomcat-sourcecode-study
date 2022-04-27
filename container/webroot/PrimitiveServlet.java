@@ -7,8 +7,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Enumeration;
 
-public class ModernServlet extends HttpServlet {
-    public ModernServlet() {
+public class PrimitiveServlet extends HttpServlet {
+
+    public PrimitiveServlet() {
     }
 
     public void init(ServletConfig var1) {
@@ -18,11 +19,11 @@ public class ModernServlet extends HttpServlet {
     public void doGet(HttpServletRequest var1, HttpServletResponse var2) throws ServletException, IOException {
         var2.setContentType("text/html");
         PrintWriter var3 = var2.getWriter();
-        String s = "HTTP/1.1 200\nContent-Type: text/html\n\n<h1>The Modern ==== service method init</h1>";
+        String s = "HTTP/1.1 200\nContent-Type: text/html\n\n<h1>The PrimitiveServlet service method init</h1>";
         var3.println(s);
         var3.println("<html>");
         var3.println("<head>");
-        var3.println("<title>Modern Servlet</title>");
+        var3.println("<title>Primitive Servlet</title>");
         var3.println("</head>");
         var3.println("<body>");
         var3.println("<h2>Headers</h2");

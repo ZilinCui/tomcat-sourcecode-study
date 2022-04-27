@@ -75,8 +75,8 @@ public class SimplePipeline implements Pipeline {
             int subscript = stage++;
             if(subscript < valves.length){
                 valves[subscript].invoke(request, response, this);
-            }else if(subscript == valves.length){
-                basic.invoke(request, response, null);
+            }else if(subscript == valves.length && basic != null){
+                basic.invoke(request, response, this);
             }
         }
     }
