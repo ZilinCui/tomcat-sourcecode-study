@@ -187,6 +187,11 @@ public class SimpleContext implements Context, Pipeline, Lifecycle {
         }
     }
 
+    @Override
+    public ContainerListener[] findContainerListeners() {
+        return new ContainerListener[0];
+    }
+
 
     @Override
     public Mapper findMapper(String protocol) {
@@ -363,6 +368,15 @@ public class SimpleContext implements Context, Pipeline, Lifecycle {
 
     }
 
+    @Override
+    public NamingResources getNamingResources() {
+        return null;
+    }
+
+    @Override
+    public void setNamingResources(NamingResources namingResources) {
+
+    }
 
 
     @Override
@@ -510,6 +524,10 @@ public class SimpleContext implements Context, Pipeline, Lifecycle {
 
     }
 
+    @Override
+    public void addResourceLink(ContextResourceLink contextResourceLink) {
+
+    }
 
 
     @Override
@@ -669,6 +687,16 @@ public class SimpleContext implements Context, Pipeline, Lifecycle {
         return new String[0];
     }
 
+    @Override
+    public ContextResourceLink findResourceLink(String s) {
+        return null;
+    }
+
+    @Override
+    public ContextResourceLink[] findResourceLinks() {
+        return new ContextResourceLink[0];
+    }
+
 
     @Override
     public ContextResource[] findResources() {
@@ -817,6 +845,10 @@ public class SimpleContext implements Context, Pipeline, Lifecycle {
 
     }
 
+    @Override
+    public void removeResourceLink(String s) {
+
+    }
 
 
     @Override
@@ -857,6 +889,11 @@ public class SimpleContext implements Context, Pipeline, Lifecycle {
     @Override
     public void addLifecycleListener(LifecycleListener listener) {
         lifecycle.addLifecycleListener(listener);
+    }
+
+    @Override
+    public LifecycleListener[] findLifecycleListeners() {
+        return new LifecycleListener[0];
     }
 
     @Override

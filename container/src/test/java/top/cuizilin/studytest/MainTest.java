@@ -24,6 +24,11 @@ class MyLifecycle implements Lifecycle{
     }
 
     @Override
+    public LifecycleListener[] findLifecycleListeners() {
+        return new LifecycleListener[0];
+    }
+
+    @Override
     public void removeLifecycleListener(LifecycleListener listener) {
 
     }

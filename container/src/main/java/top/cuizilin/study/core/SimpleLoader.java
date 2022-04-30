@@ -49,6 +49,16 @@ public class SimpleLoader implements Loader, Lifecycle {
     }
 
     @Override
+    public DefaultContext getDefaultContext() {
+        return null;
+    }
+
+    @Override
+    public void setDefaultContext(DefaultContext defaultContext) {
+
+    }
+
+    @Override
     public boolean getDelegate() {
         return false;
     }
@@ -101,6 +111,11 @@ public class SimpleLoader implements Loader, Lifecycle {
     @Override
     public void addLifecycleListener(LifecycleListener listener) {
 
+    }
+
+    @Override
+    public LifecycleListener[] findLifecycleListeners() {
+        return new LifecycleListener[0];
     }
 
     @Override

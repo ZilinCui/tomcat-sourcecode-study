@@ -275,6 +275,10 @@ public class FileLogger
 
     }
 
+    @Override
+    public LifecycleListener[] findLifecycleListeners() {
+        return new LifecycleListener[0];
+    }
 
 
     /**

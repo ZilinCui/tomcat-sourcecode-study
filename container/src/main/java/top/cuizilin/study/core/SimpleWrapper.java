@@ -160,6 +160,11 @@ public class SimpleWrapper implements Wrapper, Pipeline, Lifecycle {
     }
 
     @Override
+    public ContainerListener[] findContainerListeners() {
+        return new ContainerListener[0];
+    }
+
+    @Override
     public Mapper findMapper(String protocol) {
         return null;
     }
@@ -409,6 +414,11 @@ public class SimpleWrapper implements Wrapper, Pipeline, Lifecycle {
     @Override
     public void addLifecycleListener(LifecycleListener listener) {
 
+    }
+
+    @Override
+    public LifecycleListener[] findLifecycleListeners() {
+        return new LifecycleListener[0];
     }
 
     @Override

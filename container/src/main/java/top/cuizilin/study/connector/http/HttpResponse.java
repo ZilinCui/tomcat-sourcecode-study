@@ -591,6 +591,10 @@ public class HttpResponse implements HttpServletResponse , Response {
     public void resetBuffer() {
     }
 
+    @Override
+    public void sendAcknowledgement() throws IOException {
+
+    }
 
 
     public void sendError(int sc) throws IOException {
