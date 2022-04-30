@@ -4,6 +4,7 @@ package top.cuizilin.study.startup;
 import org.apache.catalina.*;
 import top.cuizilin.study.connector.http.HttpConnector;
 import top.cuizilin.study.core.*;
+import top.cuizilin.study.loader.SimpleWebappLoader;
 import top.cuizilin.study.logger.FileLogger;
 
 public final class BootStrap {
@@ -16,9 +17,14 @@ public final class BootStrap {
         wrapper2.setName("Modern");
         wrapper2.setServletClass("ModernServlet");
 
+        Wrapper wrapper3 = new SimpleWrapper();
+        wrapper3.setName("AServlet");
+        wrapper3.setServletClass("top.cuizilin.webdemo.AServlet");
+
         Context context = new SimpleContext();
         context.addChild(wrapper1);
         context.addChild(wrapper2);
+        context.addChild(wrapper3);
 
         Mapper mapper = new SimpleContextMapper();
         mapper.setProtocol("http");
@@ -27,13 +33,14 @@ public final class BootStrap {
         LifecycleListener listener = new SimpleContextLifecycleListener();
         ((Lifecycle) context).addLifecycleListener(listener);
 
-        Loader loader = new SimpleLoader();
+        SimpleWebappLoader loader = new SimpleWebappLoader();
         context.setLoader(loader);
 
 
         // context.addServletMapping(pattern, name);
         context.addServletMapping("/Primitive", "Primitive");
         context.addServletMapping("/Modern", "Modern");
+        context.addServletMapping("/AServlet", "AServlet");
 
         // ------ add logger --------
         System.setProperty("catalina.base", System.getProperty("user.dir"));
