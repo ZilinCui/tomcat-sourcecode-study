@@ -160,11 +160,6 @@ public class SimpleWrapper implements Wrapper, Pipeline, Lifecycle {
     }
 
     @Override
-    public ContainerListener[] findContainerListeners() {
-        return new ContainerListener[0];
-    }
-
-    @Override
     public Mapper findMapper(String protocol) {
         return null;
     }
@@ -417,11 +412,6 @@ public class SimpleWrapper implements Wrapper, Pipeline, Lifecycle {
     }
 
     @Override
-    public LifecycleListener[] findLifecycleListeners() {
-        return new LifecycleListener[0];
-    }
-
-    @Override
     public void removeLifecycleListener(LifecycleListener listener) {
 
     }
@@ -431,7 +421,6 @@ public class SimpleWrapper implements Wrapper, Pipeline, Lifecycle {
         System.out.println("Starting Wrapper: " + name);
         if(started)
             throw new LifecycleException("Wrapper already started");
-        lifecycle.fireLifecycleEvent(BEFORE_START_EVENT, null);
         started = true;
 
         if(loader != null && loader instanceof Lifecycle){
@@ -441,7 +430,6 @@ public class SimpleWrapper implements Wrapper, Pipeline, Lifecycle {
             ((Lifecycle)pipeline).start();
         }
         lifecycle.fireLifecycleEvent(START_EVENT, null);
-        lifecycle.fireLifecycleEvent(AFTER_START_EVENT, null);
     }
 
     @Override
@@ -457,7 +445,6 @@ public class SimpleWrapper implements Wrapper, Pipeline, Lifecycle {
         if (!started)
             throw new LifecycleException("Wrapper " + name + " not started");
         // Notify our interested LifecycleListeners
-        lifecycle.fireLifecycleEvent(BEFORE_STOP_EVENT, null);
 
         // Notify our interested LifecycleListeners
         lifecycle.fireLifecycleEvent(STOP_EVENT, null);
@@ -474,6 +461,5 @@ public class SimpleWrapper implements Wrapper, Pipeline, Lifecycle {
         }
 
         // Notify our interested LifecycleListeners
-        lifecycle.fireLifecycleEvent(AFTER_STOP_EVENT, null);
     }
 }

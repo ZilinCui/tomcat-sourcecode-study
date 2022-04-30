@@ -187,10 +187,6 @@ public class SimpleContext implements Context, Pipeline, Lifecycle {
         }
     }
 
-    @Override
-    public ContainerListener[] findContainerListeners() {
-        return new ContainerListener[0];
-    }
 
     @Override
     public Mapper findMapper(String protocol) {
@@ -367,15 +363,7 @@ public class SimpleContext implements Context, Pipeline, Lifecycle {
 
     }
 
-    @Override
-    public NamingResources getNamingResources() {
-        return null;
-    }
 
-    @Override
-    public void setNamingResources(NamingResources namingResources) {
-
-    }
 
     @Override
     public String getPath() {
@@ -522,10 +510,7 @@ public class SimpleContext implements Context, Pipeline, Lifecycle {
 
     }
 
-    @Override
-    public void addResourceLink(ContextResourceLink resourceLink) {
 
-    }
 
     @Override
     public void addRoleMapping(String role, String link) {
@@ -684,15 +669,6 @@ public class SimpleContext implements Context, Pipeline, Lifecycle {
         return new String[0];
     }
 
-    @Override
-    public ContextResourceLink findResourceLink(String name) {
-        return null;
-    }
-
-    @Override
-    public ContextResourceLink[] findResourceLinks() {
-        return new ContextResourceLink[0];
-    }
 
     @Override
     public ContextResource[] findResources() {
@@ -841,10 +817,7 @@ public class SimpleContext implements Context, Pipeline, Lifecycle {
 
     }
 
-    @Override
-    public void removeResourceLink(String name) {
 
-    }
 
     @Override
     public void removeRoleMapping(String role) {
@@ -887,11 +860,6 @@ public class SimpleContext implements Context, Pipeline, Lifecycle {
     }
 
     @Override
-    public LifecycleListener[] findLifecycleListeners() {
-        return new LifecycleListener[0];
-    }
-
-    @Override
     public void removeLifecycleListener(LifecycleListener listener) {
 
     }
@@ -902,7 +870,6 @@ public class SimpleContext implements Context, Pipeline, Lifecycle {
         if (started) {
             throw new LifecycleException("SimpleContext has already started");
         }
-        lifecycle.fireLifecycleEvent(BEFORE_START_EVENT, null);
         started = true;
 
 
@@ -923,7 +890,6 @@ public class SimpleContext implements Context, Pipeline, Lifecycle {
         }
          lifecycle.fireLifecycleEvent(START_EVENT, null);
 
-        lifecycle.fireLifecycleEvent(AFTER_START_EVENT, null);
         log("started");
     }
 
@@ -933,7 +899,6 @@ public class SimpleContext implements Context, Pipeline, Lifecycle {
         if(!started){
             throw new LifecycleException("SimpleContext has not been started");
         }
-        lifecycle.fireLifecycleEvent(BEFORE_STOP_EVENT, null);
         lifecycle.fireLifecycleEvent(STOP_EVENT, null);
         started = false;
 
@@ -950,7 +915,6 @@ public class SimpleContext implements Context, Pipeline, Lifecycle {
             ((Lifecycle)loader).stop();
         }
 
-        lifecycle.fireLifecycleEvent(AFTER_STOP_EVENT, null);
 
         log("stopped");
     }
