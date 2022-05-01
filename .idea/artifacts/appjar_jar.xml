@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="appjar:jar">
+    <output-path>$PROJECT_DIR$/webapp/web/WEB-INF/lib</output-path>
+    <root id="archive" name="appjar.jar">
+      <element id="module-output" name="appjar" />
+    </root>
+  </artifact>
+</component>
